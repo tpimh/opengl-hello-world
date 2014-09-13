@@ -28,6 +28,10 @@ int main () {
 
         // Swap front and back rendering buffers
         w.swap_buffers ();
+        
+        // Update input values
+        poll_events ();
+        
         // Check if ESC key was pressed or window was closed
         running = !(ButtonState.PRESS == w.get_key (Key.ESCAPE) || w.should_close);
     }
