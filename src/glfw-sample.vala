@@ -5,14 +5,17 @@ int main () {
     bool running = true;
 
     // Initialize GLFW
-    glfwInit ();
+    init ();
 
-    // Open an OpenGL window (you can also try Mode.FULLSCREEN)
-    if (!glfwOpenWindow (640, 480, 0, 0, 0, 0, 0, 0, Mode.WINDOW)) {
-        glfwTerminate ();
+    // Open an OpenGL window
+    Window w;
+    if ((w = new Window(640, 480, "GLFW3 Hello World", null, null)) == null) {
+        terminate ();
         return 1;
     }
-
+    
+    w.make_context_current ();
+    
     // Main loop
     while (running) {
         // OpenGL rendering goes here...
@@ -24,13 +27,13 @@ int main () {
         glEnd ();
 
         // Swap front and back rendering buffers
-        glfwSwapBuffers ();
+        w.swap_buffers ();
         // Check if ESC key was pressed or window was closed
-        running = !glfwGetKey (Key.ESC) && (bool) glfwGetWindowParam (WindowParam.OPENED);
+        running = !(ButtonState.PRESS == w.get_key (Key.ESCAPE) || w.should_close);
     }
 
     // Close window and terminate GLFW
-    glfwTerminate ();
+    terminate ();
 
     // Exit program
     return 0;
