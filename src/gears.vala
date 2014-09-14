@@ -283,14 +283,14 @@ static void init (string[] args) {
 
     foreach (string arg in args) {
         if (arg == "-info") {
-            GLib.stdout.printf ("GL_RENDERER   = %s\n", glGetString (GL_RENDERER));
-            GLib.stdout.printf ("GL_VERSION    = %s\n", glGetString (GL_VERSION));
-            GLib.stdout.printf ("GL_VENDOR     = %s\n", glGetString (GL_VENDOR));
-            GLib.stdout.printf ("GL_EXTENSIONS = %s\n", glGetString (GL_EXTENSIONS));
+            stdout.printf ("GL_RENDERER   = %s\n", glGetString (GL_RENDERER));
+            stdout.printf ("GL_VERSION    = %s\n", glGetString (GL_VERSION));
+            stdout.printf ("GL_VENDOR     = %s\n", glGetString (GL_VENDOR));
+            stdout.printf ("GL_EXTENSIONS = %s\n", glGetString (GL_EXTENSIONS));
         }
         else if (arg == "-exit") {
             autoexit = 30;
-            GLib.stdout.printf ("Auto Exit after %i seconds.\n", autoexit);
+            stdout.printf ("Auto Exit after %i seconds.\n", autoexit);
         }
     }
 }
@@ -301,15 +301,15 @@ int main (string[] args) {
     int width, height;
 
     if (GLFW.init () == false) {
-        GLib.stderr.printf ("Failed to initialize GLFW\n");
+        stderr.printf ("Failed to initialize GLFW\n");
         return 1;
     }
     
-    WindowHint.DEPTH_BITS.set(16);
+    WindowHint.DEPTH_BITS.set (16);
 
     window = new Window (300, 300, "Gears", null, null);
     if (window == null) {
-        GLib.stderr.printf ("Failed to open GLFW window\n");
+        stderr.printf ("Failed to open GLFW window\n");
         terminate ();
         return 1;
     }
