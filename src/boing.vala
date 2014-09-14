@@ -332,20 +332,20 @@ void BounceBall (double delta_t) {
 
     /* Bounce on walls */
     if (ball_x >  (BOUNCE_WIDTH / 2 + WALL_R_OFFSET)) {
-        ball_x_inc = -0.5f - 0.75f * (GLfloat) Random.double_range (0, RAND_MAX) ;
+        ball_x_inc = -0.5f - 0.75f * (GLfloat) (Random.next_double () / RAND_MAX);
         deg_rot_y_inc = -deg_rot_y_inc;
     }
     if (ball_x < -(BOUNCE_HEIGHT / 2 + WALL_L_OFFSET)) {
-        ball_x_inc =  0.5f + 0.75f * (GLfloat) Random.double_range (0, RAND_MAX);
+        ball_x_inc =  0.5f + 0.75f * (GLfloat) (Random.next_double () / RAND_MAX);
         deg_rot_y_inc = -deg_rot_y_inc;
     }
 
     /* Bounce on floor / roof */
     if (ball_y >  BOUNCE_HEIGHT / 2     ) {
-        ball_y_inc = -0.75f - 1.0f * (GLfloat) Random.double_range (0, RAND_MAX);
+        ball_y_inc = -0.75f - 1.0f * (GLfloat) (Random.next_double () / RAND_MAX);
     }
     if (ball_y < -BOUNCE_HEIGHT / 2 * 0.85) {
-        ball_y_inc =  0.75f + 1.0f * (GLfloat) Random.double_range (0, RAND_MAX);
+        ball_y_inc =  0.75f + 1.0f * (GLfloat) (Random.next_double () / RAND_MAX);
     }
 
     /* Update ball position */
