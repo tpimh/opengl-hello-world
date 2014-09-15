@@ -110,18 +110,50 @@ int main (string[] args) {
     // Main loop
     while (!window.should_close) {
         // draw begin
+        glClearColor (0.5f, 0.5f, 0.5f, 0.0f); // gray background
         glClear(GL_COLOR_BUFFER_BIT);
         
+        glMatrixMode (GL_PROJECTION);
+        glLoadIdentity ();
+        glOrtho (0.0, (GLdouble) width, 0.0, (GLdouble) height, -1.0, 1.0);
+
+        // first quad
         glBegin (GL_QUADS);
             glTexCoord2i (0, 0);
-            glVertex2d (-0.5, -0.5);
-            glTexCoord2i (10, 0);
-            glVertex2d (0.5, -0.5);
-            glTexCoord2i (10, 10);
-            glVertex2d (0.5, 0.5);
-            glTexCoord2i (0, 10);
-            glVertex2d (-0.5, 0.5);
+            glVertex2d (0.0, 0.0);
+            glTexCoord2i (3, 0);
+            glVertex2d (100.0, 0.0);
+            glTexCoord2i (3, 3);
+            glVertex2d (100.0, 100.0);
+            glTexCoord2i (0, 3);
+            glVertex2d (0.0, 100.0);
         glEnd ();
+        
+        // second quad        
+        glBegin (GL_QUADS);
+            glTexCoord2i (0, 0);
+            glVertex2d (100.0, 100.0);
+            glTexCoord2i (5, 0);
+            glVertex2d (150.0, 100.0);
+            glTexCoord2i (5, 5);
+            glVertex2d (150.0, 150.0);
+            glTexCoord2i (0, 5);
+            glVertex2d (100.0, 150.0);
+        glEnd ();
+        
+        // third quad
+        glBegin (GL_QUADS);
+            glTexCoord2i (0, 0);
+            glVertex2d (150.0, 150.0);
+            glTexCoord2i (3, 0);
+            glVertex2d (200.0, 150.0);
+            glTexCoord2i (3, 3);
+            glVertex2d (200.0, 200.0);
+            glTexCoord2i (0, 3);
+            glVertex2d (150.0, 200.0);
+        glEnd ();
+
+        glFlush ();
         // draw end
         
         window.swap_buffers ();
