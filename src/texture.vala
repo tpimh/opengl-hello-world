@@ -86,6 +86,12 @@ int main (string[] args) {
     reshape (window, width, height);
 
     // init begin
+    bool growing = true;
+    GLdouble size = 50.0;
+    double time_passed = 0.0;
+    
+    set_time (0.0);     // reset time to zero
+    
     glEnable (GL_BLEND);
     glEnable (GL_TEXTURE_2D);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -109,6 +115,22 @@ int main (string[] args) {
     
     // Main loop
     while (!window.should_close) {
+        // update begin
+        
+        if (!growing)
+            size -= (get_time () - time_passed) * 10.0;
+        else
+            size += (get_time () - time_passed) * 10.0;
+        
+        if (size <= 0.0)
+            growing = true;
+        
+        if (size >= 50.0)
+            growing = false;
+        
+        time_passed = get_time ();
+        // update end
+        
         // draw begin
         glClearColor (0.5f, 0.5f, 0.5f, 0.0f); // gray background
         glClear(GL_COLOR_BUFFER_BIT);
@@ -122,35 +144,35 @@ int main (string[] args) {
             glTexCoord2i (0, 0);
             glVertex2d (0.0, 0.0);
             glTexCoord2i (3, 0);
-            glVertex2d (100.0, 0.0);
+            glVertex2d (100.0 - size, 0.0);
             glTexCoord2i (3, 3);
-            glVertex2d (100.0, 100.0);
+            glVertex2d (100.0 - size, 100.0 - size);
             glTexCoord2i (0, 3);
-            glVertex2d (0.0, 100.0);
+            glVertex2d (0.0, 100.0 - size);
         glEnd ();
         
         // second quad        
         glBegin (GL_QUADS);
             glTexCoord2i (0, 0);
-            glVertex2d (100.0, 100.0);
-            glTexCoord2i (5, 0);
-            glVertex2d (150.0, 100.0);
-            glTexCoord2i (5, 5);
-            glVertex2d (150.0, 150.0);
-            glTexCoord2i (0, 5);
-            glVertex2d (100.0, 150.0);
+            glVertex2d (100.0 - size, 100.0 - size);
+            glTexCoord2i (5 - (int) growing, 0);
+            glVertex2d (150.0 - size, 100.0 - size);
+            glTexCoord2i (5 - (int) growing, 5 - (int) growing);
+            glVertex2d (150.0 - size, 150.0 - size);
+            glTexCoord2i (0, 5 - (int) growing);
+            glVertex2d (100.0 - size, 150.0 - size);
         glEnd ();
         
         // third quad
         glBegin (GL_QUADS);
             glTexCoord2i (0, 0);
-            glVertex2d (150.0, 150.0);
+            glVertex2d (150.0 - size, 150.0 - size);
             glTexCoord2i (3, 0);
-            glVertex2d (200.0, 150.0);
+            glVertex2d (200.0, 150.0 - size);
             glTexCoord2i (3, 3);
             glVertex2d (200.0, 200.0);
             glTexCoord2i (0, 3);
-            glVertex2d (150.0, 200.0);
+            glVertex2d (150.0 - size, 200.0);
         glEnd ();
 
         glFlush ();
